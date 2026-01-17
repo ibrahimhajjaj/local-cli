@@ -9,6 +9,7 @@ Access site shells, databases, and WP-CLI directly from your terminal without us
 - **Fuzzy Search:** Jump to sites by name or ID (e.g., `local-cli sg`).
 - **One-click Database:** Connect to MySQL instantly (e.g., `local-cli sg db`).
 - **WP-CLI Access:** Open WP-CLI shells easily.
+- **Direct Commands:** Run any command directly (e.g., `local-cli sg ls -la` or `local-cli sg wp plugin list`).
 - **Auto-Installer:** Installs Go and the tool automatically on macOS/Linux.
 
 ## Installation
@@ -44,4 +45,9 @@ local-cli my-site-name db
 
 # Open WP-CLI interactive shell
 local-cli my-site-name wp
+
+# Run commands directly
+local-cli my-site-name ls -la
+local-cli my-site-name git status
+local-cli my-site-name wp plugin list
 ```
