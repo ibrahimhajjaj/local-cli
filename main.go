@@ -171,14 +171,14 @@ func runAction(scriptPath string, site Site, action string, extraArgs []string) 
 
 	case "wp":
 		if len(extraArgs) > 0 {
-			command = fmt.Sprintf("wp %s", strings.Join(extraArgs, " "))
+			command = fmt.Sprintf("wp %s", quoteArgs(extraArgs))
 		} else {
 			command = "" // Empty means interactive mode
 		}
 
 	case "shell":
 		if len(extraArgs) > 0 {
-			command = strings.Join(extraArgs, " ")
+			command = quoteArgs(extraArgs)
 		} else {
 			command = "" // Interactive mode
 		}
@@ -190,7 +190,7 @@ func runAction(scriptPath string, site Site, action string, extraArgs []string) 
 		if len(extraArgs) > 0 {
 			fullCmd = append(fullCmd, extraArgs...)
 		}
-		command = strings.Join(fullCmd, " ")
+		command = quoteArgs(fullCmd)
 	}
 
 	// 2. Read the original Local script
@@ -393,4 +393,19 @@ func getSites(configDir string) ([]Site, error) {
 	}
 
 	return sites, nil
+}
+
+func quoteArgs(args []string) string {
+	var quoted []string
+	for _, arg := range args {
+		quoted = append(quoted, quoteArg(arg))
+	}
+	return strings.Join(quoted, " ")
+}
+
+func quoteArg(arg string) string {
+	if arg == "" {
+		return "''"
+	}
+	return "'" + strings.ReplaceAll(arg, "'", "'\\''") + "'"
 }
